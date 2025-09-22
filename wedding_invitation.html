@@ -216,6 +216,47 @@
       .qr img { width: 120px; height: 120px; }
     }
   </style>
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+
+    // Track clicks for Google Maps link
+    document.addEventListener('DOMContentLoaded', function() {
+      var mapsLink = document.querySelector('a[href*="google.com/maps"]');
+      if (mapsLink) {
+        mapsLink.addEventListener('click', function() {
+          gtag('event', 'click', {
+            'event_category': 'engagement',
+            'event_label': 'Google Maps Link'
+          });
+        });
+      }
+      // Track clicks for live streaming link
+      var liveLink = document.querySelector('a.link[href*="google.com"]');
+      if (liveLink) {
+        liveLink.addEventListener('click', function() {
+          gtag('event', 'click', {
+            'event_category': 'engagement',
+            'event_label': 'Live Streaming Link'
+          });
+        });
+      }
+      // Track clicks for video invitation link
+      var videoLink = document.querySelector('a[href*="youtube.com/watch"]');
+      if (videoLink) {
+        videoLink.addEventListener('click', function() {
+          gtag('event', 'click', {
+            'event_category': 'engagement',
+            'event_label': 'Video Invitation Link'
+          });
+        });
+      }
+    });
+  </script>
 </head>
 <body>
   <div class="main-card">

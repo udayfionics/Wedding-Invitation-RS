@@ -54,6 +54,258 @@
       this.reset();
     });
   };
+    const link = document.getElementById("headerJsonToFirestore");
+
+    // Use dblclick for desktop, and detect double tap on mobile
+    let lastTap = 0;
+
+    function handleAction() {
+        alert("double click/tap detected! Implement your action here.");
+        // saveJsonToFirestore();
+    }
+
+    // Desktop: double click
+    link.addEventListener("dblclick", function (e) {
+        e.preventDefault();
+        handleAction();
+    });
+
+    // Mobile: double tap
+    link.addEventListener("touchend", function (e) {
+        let currentTime = new Date().getTime();
+        let tapLength = currentTime - lastTap;
+        if (tapLength < 300 && tapLength > 0) {
+            e.preventDefault();
+            handleAction();
+        }
+        lastTap = currentTime;
+    });
+    function saveJsonToFirestore() {
+        const expenses = [
+            {
+                "timestamp": "20/08/2025 16:36:33",
+                "email": "guntur.lakshmi@gmail.com",
+                "name": "Pettubadi sarees+ Ramy",
+                "category": "Clothes",
+                "cost": 79400,
+                "date": "19/08/2025",
+                "paidBy": "Lakshmi",
+                "settled": true,
+                "remarks": "Missamma: 8000, Chennai shopping mall : 4400, KLM: 22540, Vigneswara silks: 17820+19490, Chandanagar bouquet 6700"
+            },
+            {
+                "timestamp": "23/08/2025 15:24:07",
+                "email": "deepucoolbreeze@gmail.com",
+                "name": "Catering Advance paym",
+                "category": "Food",
+                "cost": 25000,
+                "date": "20/08/2025",
+                "paidBy": "Lakshmi",
+                "settled": true,
+                "remarks": ""
+            },
+            {
+                "timestamp": "23/08/2025 15:24:46",
+                "email": "deepucoolbreeze@gmail.com",
+                "name": "Kalyana Mandapam",
+                "category": "Function hall",
+                "cost": 75000,
+                "date": "20/08/2025",
+                "paidBy": "Uday",
+                "settled": true,
+                "remarks": "Amount sent to Sai’s Pedanannagaru"
+            },
+            {
+                "timestamp": "24/08/2025 12:10:46",
+                "email": "guntur.lakshmi@gmail.com",
+                "name": "Sample karpura dandal",
+                "category": "Pooja saamanu",
+                "cost": 400,
+                "date": "24/08/2025",
+                "paidBy": "Lakshmi",
+                "settled": true,
+                "remarks": ""
+            },
+            {
+                "timestamp": "25/08/2025 18:27:00",
+                "email": "deepucoolbreeze@gmail.com",
+                "name": "Pelli Koduku Battalu",
+                "category": "Clothes",
+                "cost": 25000,
+                "date": "25/08/2025",
+                "paidBy": "Deepthi",
+                "settled": true,
+                "remarks": ""
+            },
+            {
+                "timestamp": "26/08/2025 09:19:33",
+                "email": "guntur.lakshmi@gmail.com",
+                "name": "Pattu tappita",
+                "category": "Clothes",
+                "cost": 12240,
+                "date": "25/08/2025",
+                "paidBy": "Lakshmi",
+                "settled": true,
+                "remarks": ""
+            },
+            {
+                "timestamp": "29/08/2025 09:37:16",
+                "email": "deepucoolbreeze@gmail.com",
+                "name": "Ramya Bridal Jewellery",
+                "category": "Shopping",
+                "cost": 10950,
+                "date": "23/08/2025",
+                "paidBy": "Ramya",
+                "settled": true,
+                "remarks": "Jewellery purchased at Ganesh"
+            },
+            {
+                "timestamp": "30/08/2025 22:45:05",
+                "email": "deepucoolbreeze@gmail.com",
+                "name": "Blouse Pieces",
+                "category": "Clothes",
+                "cost": 5630,
+                "date": "30/08/2025",
+                "paidBy": "Deepthi",
+                "settled": false,
+                "remarks": ""
+            },
+            {
+                "timestamp": "21/08/2025 22:40:33",
+                "email": "deepucoolbreeze@gmail.com",
+                "name": "Tailor charges",
+                "category": "Clothes",
+                "cost": 1900,
+                "date": "21/08/2025",
+                "paidBy": "Deepthi",
+                "settled": false,
+                "remarks": ""
+            },
+            {
+                "timestamp": "30/08/2025 22:45:53",
+                "email": "deepucoolbreeze@gmail.com",
+                "name": "Sarees from Hitha",
+                "category": "Clothes",
+                "cost": 2554,
+                "date": "29/08/2025",
+                "paidBy": "Deepthi",
+                "settled": false,
+                "remarks": ""
+            },
+            {
+                "timestamp": "03/09/2025 20:31:22",
+                "email": "guntur.lakshmi@gmail.com",
+                "name": "Tailor bill",
+                "category": "Clothes",
+                "cost": 3000,
+                "date": "01/09/2025",
+                "paidBy": "Lakshmi",
+                "settled": true,
+                "remarks": "Tailor bill for sample dress and blouse and gagara and pinni Gadwal saree cloth attachment"
+            },
+            {
+                "timestamp": "07/09/2025 20:05:23",
+                "email": "guntur.lakshmi@gmail.com",
+                "name": "Pasupu kunkuma",
+                "category": "Pooja saamanu",
+                "cost": 2280,
+                "date": "08/09/2025",
+                "paidBy": "Lakshmi",
+                "settled": true,
+                "remarks": "Pasupu kunkuma from amp"
+            },
+            {
+                "timestamp": "07/09/2025 20:13:41",
+                "email": "guntur.lakshmi@gmail.com",
+                "name": "Catering for 25 mem.",
+                "category": "Food",
+                "cost": 3200,
+                "date": "08/09/2025",
+                "paidBy": "Lakshmi",
+                "settled": true,
+                "remarks": "Pellikuturini chese roju catering"
+            },
+            {
+                "timestamp": "08/09/2025 22:12:13",
+                "email": "deepucoolbreeze@gmail.com",
+                "name": "Jewellery from Sri dksaf",
+                "category": "Shopping",
+                "cost": 2075,
+                "date": "28/08/2025",
+                "paidBy": "Ramya",
+                "settled": false,
+                "remarks": ""
+            },
+            {
+                "timestamp": "09/09/2025 22:16:33",
+                "email": "deepucoolbreeze@gmail.com",
+                "name": "Ramya Dresses at Trenc",
+                "category": "Clothes",
+                "cost": 4893,
+                "date": "27/09/2025",
+                "paidBy": "Ramya",
+                "settled": false,
+                "remarks": ""
+            },
+            {
+                "timestamp": "10/09/2025 22:04:41",
+                "email": "deepucoolbreeze@gmail.com",
+                "name": "Courier charges for blou",
+                "category": "Clothes",
+                "cost": 700,
+                "date": "10/09/2025",
+                "paidBy": "Deepthi",
+                "settled": false,
+                "remarks": "(250+300+150) Blouses sent to Kdl for stitching"
+            },
+            {
+                "timestamp": "10/09/2025 22:13:04",
+                "email": "deepucoolbreeze@gmail.com",
+                "name": "Tailor charges",
+                "category": "Clothes",
+                "cost": 1260,
+                "date": "10/09/2025",
+                "paidBy": "Uday",
+                "settled": false,
+                "remarks": ""
+            },
+            {
+                "timestamp": "12/09/2025 11:38:17",
+                "email": "deepucoolbreeze@gmail.com",
+                "name": "Pettubadi Pancelu",
+                "category": "Clothes",
+                "cost": 35000,
+                "date": "12/09/2025",
+                "paidBy": "Deepthi",
+                "settled": true,
+                "remarks": "Pattu sarees pico falls and pattu sarees mudulu 100 pcs"
+            }
+        ]
+        expenses.forEach((row, index) => {
+            const expense = {
+                id: Date.now() + index,  // unique ID
+                timestamp: row.timestamp,
+                email: row.email,
+                name: row.name,
+                category: row.category,
+                cost: parseFloat(row.cost),
+                date: row.date,
+                paidBy: row.paidBy,
+                settled: row.settled,
+                remarks: row.remarks
+            };
+
+            db.collection("expenses").add(expense)
+                .then(() => {
+                    console.log("Inserted:", expense)
+                    alert("Data migration completed!")
+                })
+                .catch(err => {
+                    console.error("Error inserting:", err)
+                    alert("Data migration failed!")
+                });
+        });
+    }
 </script>
 </head>
 <body>
@@ -63,7 +315,7 @@
             style="background:#e2b97f; color:#7e4a2f; padding:7px 16px; border-radius:7px; text-decoration:none; font-weight:600; font-size:1rem;">←
             Back to Expenses</a>
     </div>
-    <h2>Add Expense Item</h2>
+    <h2 id="headerJsonToFirestore">Add Expense Item</h2>
     <label for="name">Expense Name</label>
     <input type="text" id="name" name="name" required>
     <label for="category">Category</label>
@@ -73,6 +325,9 @@
       <option>Catering</option>
       <option>Food</option>
       <option>Shopping</option>
+      <option>Stitching</option>
+      <option>Travel/Transport</option>
+      <option>Travelling</option>
       <option>Pooja samanlu</option>
       <option>Function hall</option>
     </select>

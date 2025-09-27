@@ -1,121 +1,162 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8"/>
+  <meta charset="utf-8" />
   <title>Wedding Expenses Tracker</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/48/wedding-rings.png"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/48/wedding-rings.png" />
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;700&display=swap" rel="stylesheet">
   <style>
-  #expenses-list {
-    margin-top: 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  .expense-card {
-    background: #fffdf8;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px #e2b97f22;
-    padding: 16px 14px 12px 14px;
-    border: 2px solid #e2b97f44;
-    display: flex;
-    flex-direction: column;
-    font-size: 1rem;
-  }
-  .expense-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 6px;
-  }
-  .expense-name {
-    font-weight: 600;
-    color: #a03c1c;
-    font-size: 1.08em;
-    flex: 1;
-    word-break: break-word;
-  }
-  .expense-cost {
-    font-weight: bold;
-    color: #b85c38;
-    font-size: 1.08em;
-    min-width: 80px;
-    text-align: right;
-  }
-  .expense-details {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 6px;
-    font-size: 0.98em;
-    color: #7e4a2f;
-  }
-  .expense-details span {
-    min-width: 120px;
-    word-break: break-word;
-  }
-  .expense-settled input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    accent-color: #b85c38;
-    vertical-align: middle;
-    margin-left: 4px;
-  }
-  .expense-remarks {
-    font-size: 0.97em;
-    color: #4b2e2e;
-    margin-top: 2px;
-    word-break: break-word;
-  }
-  .total-row-card {
-    margin-top: 22px;
-    background: #fffbe6;
-    border-radius: 8px;
-    padding: 10px 14px;
-    font-size: 1.08em;
-    box-shadow: 0 1px 4px #e2b97f22;
-    border: 2px solid #e2b97f44;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  @media (max-width: 700px) {
-    .main-card { max-width: 100vw; padding: 4vw 2vw; border-width: 4px; }
-    #expenses-list { gap: 10px; }
-    .expense-card { padding: 12px 6vw 10px 6vw; font-size: 0.98em; }
-    .expense-header { flex-direction: column; align-items: flex-start; gap: 2px; }
-    .expense-cost { align-self: flex-end; font-size: 1.05em; }
-    .expense-details { flex-direction: column; gap: 6px; font-size: 0.97em; }
-    .total-row-card { font-size: 1em; padding: 8px 6vw; }
-  }
-</style>
+    #expenses-list {
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .expense-card {
+      background: #fffdf8;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px #e2b97f22;
+      padding: 16px 14px 12px 14px;
+      border: 2px solid #e2b97f44;
+      display: flex;
+      flex-direction: column;
+      font-size: 1rem;
+    }
+
+    .expense-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .expense-name {
+      font-weight: 600;
+      color: #a03c1c;
+      font-size: 1.08em;
+      flex: 1;
+      word-break: break-word;
+    }
+
+    .expense-cost {
+      font-weight: bold;
+      color: #b85c38;
+      font-size: 1.08em;
+      min-width: 80px;
+      text-align: right;
+    }
+
+    .expense-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 6px;
+      font-size: 0.98em;
+      color: #7e4a2f;
+    }
+
+    .expense-details span {
+      min-width: 120px;
+      word-break: break-word;
+    }
+
+    .expense-settled input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: #b85c38;
+      vertical-align: middle;
+      margin-left: 4px;
+    }
+
+    .expense-remarks {
+      font-size: 0.97em;
+      color: #4b2e2e;
+      margin-top: 2px;
+      word-break: break-word;
+    }
+
+    .total-row-card {
+      margin-top: 22px;
+      background: #fffbe6;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 1.08em;
+      box-shadow: 0 1px 4px #e2b97f22;
+      border: 2px solid #e2b97f44;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    @media (max-width: 700px) {
+      .main-card {
+        max-width: 100vw;
+        padding: 4vw 2vw;
+        border-width: 4px;
+      }
+
+      #expenses-list {
+        gap: 10px;
+      }
+
+      .expense-card {
+        padding: 12px 6vw 10px 6vw;
+        font-size: 0.98em;
+      }
+
+      .expense-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+      }
+
+      .expense-cost {
+        align-self: flex-end;
+        font-size: 1.05em;
+      }
+
+      .expense-details {
+        flex-direction: column;
+        gap: 6px;
+        font-size: 0.97em;
+      }
+
+      .total-row-card {
+        font-size: 1em;
+        padding: 8px 6vw;
+      }
+    }
+  </style>
 </head>
+
 <body>
   <div class="main-card">
-  <h2>Wedding Expenses Tracker</h2>
-  <div id="expenses-list"></div>
-  <div class="total-row-card">
-    <span style="font-weight:bold; color:#b85c38; font-size:1.1em;">Total</span>
-    <span id="total-cost" style="float:right; color:#a03c1c; font-weight:bold; font-size:1.1em;"></span>
+    <h2>Wedding Expenses Tracker</h2>
+    <div id="expenses-list"></div>
+    <div class="total-row-card">
+      <span style="font-weight:bold; color:#b85c38; font-size:1.1em;">Total</span>
+      <span id="total-cost" style="float:right; color:#a03c1c; font-weight:bold; font-size:1.1em;"></span>
+    </div>
   </div>
-</div>
-<script>
-  fetch('expenses.json')
-    .then(response => response.json())
-    .then(data => {
-      const list = document.getElementById('expenses-list');
-      let total = 0;
-      if (!Array.isArray(data) || !data.length) {
-        list.innerHTML = '<div style="text-align:center; color:#a03c1c;">No expenses found.</div>';
-        document.getElementById('total-cost').textContent = '-';
-        return;
-      }
-      data.forEach(item => {
-        total += Number(item.cost) || 0;
-        const card = document.createElement('div');
-        card.className = 'expense-card';
-        card.innerHTML = `
+  <script>
+    fetch('expenses.json')
+      .then(response => response.json())
+      .then(data => {
+        const list = document.getElementById('expenses-list');
+        let total = 0;
+        if (!Array.isArray(data) || !data.length) {
+          list.innerHTML = '<div style="text-align:center; color:#a03c1c;">No expenses found.</div>';
+          document.getElementById('total-cost').textContent = '-';
+          return;
+        }
+        data.forEach(item => {
+          total += Number(item.cost) || 0;
+          const card = document.createElement('div');
+          card.className = 'expense-card';
+          card.innerHTML = `
           <div class="expense-header">
             <span class="expense-name">${item.name}</span>
             <span class="expense-cost">₹${item.cost}</span>
@@ -128,15 +169,16 @@
           </div>
           <div class="expense-remarks"><b>Notes:</b> ${item.remarks || ''}</div>
         `;
-        list.appendChild(card);
+          list.appendChild(card);
+        });
+        document.getElementById('total-cost').textContent = total;
+      })
+      .catch(() => {
+        document.getElementById('expenses-list').innerHTML =
+          `<div style="text-align:center; color:#a03c1c;">Unable to load expenses. Please add <b>expenses.json</b> in this folder.</div>`;
+        document.getElementById('total-cost').textContent = '-';
       });
-      document.getElementById('total-cost').textContent = total;
-    })
-    .catch(() => {
-      document.getElementById('expenses-list').innerHTML =
-        `<div style="text-align:center; color:#a03c1c;">Unable to load expenses. Please add <b>expenses.json</b> in this folder.</div>`;
-      document.getElementById('total-cost').textContent = '-';
-    });
-</script>
+  </script>
 </body>
+
 </html>

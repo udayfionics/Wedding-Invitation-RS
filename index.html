@@ -18,6 +18,20 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pinch-zoom-js/2.3.4/pinch-zoom.min.css"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pinch-zoom-js/2.3.4/pinch-zoom.min.js"></script>
   <style>
+    .wedding-card-img {
+      display: block;
+      width: 100%;
+      max-width: 600px;  /* keeps it nice on desktop */
+      height: auto;      /* preserve aspect ratio */
+      margin: 0 auto;    /* center horizontally */
+      border-radius: 10px;
+      box-shadow: 0 2px 12px #e2b97f55;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .wedding-card-img:hover {
+      transform: scale(1.02);
+    }
     .modal {
       display: none;
       position: fixed;

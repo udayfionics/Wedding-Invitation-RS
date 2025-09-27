@@ -109,8 +109,8 @@
       text-align: right;
     }
     @media (max-width: 700px) {
-      #expenses-table { display: none; }
-      #expenses-list { display: flex; flex-direction: column; gap: 10px; }
+      #expenses-table { display: table; }
+      #expenses-list { display: none; flex-direction: column; gap: 10px; }
     }
     @media (min-width: 701px) {
       #expenses-list { display: none; }
@@ -207,6 +207,7 @@
       <table id="expenses-table">
         <thead>
           <tr>
+            <th>#</th>
             <th>Expense Name</th>
             <th>Category</th>
             <th style="text-align:right;">Cost (₹)</th>
@@ -221,9 +222,10 @@
         </tbody>
         <tfoot>
           <tr class="total-row">
-            <td colspan="2">Total</td>
+            <td colspan="2"></td>
+            <td colspan="1">Total</td>
             <td id="total-cost" style="text-align:right;"></td>
-            <td colspan="4"></td>
+            <td colspan="5"></td>
           </tr>
         </tfoot>
       </table>
@@ -264,13 +266,16 @@
         document.getElementById('total-cost').textContent = '-';
         return;
       }
+      let idx = 0;
       snapshot.forEach(doc => {
+        console.log("Expense document:idx", idx);
         console.log("Expense document:", doc.id);
         const item = doc.data();
         total += Number(item.cost) || 0;
         // Table row for desktop
         const tr = document.createElement('tr');
         tr.innerHTML = `
+          <td>${idx + 1}.</td>
           <td>${item.name}</td>
           <td class="category">${item.category}</td>
           <td style="text-align:right;">${item.cost}</td>
@@ -285,6 +290,7 @@
         card.className = 'expense-card';
         card.innerHTML = `
           <div class="expense-header">
+            <span style="font-weight:bold; color:#b85c38; margin-right:8px;">${idx + 1}.</span>
             <span class="expense-name">${item.name}</span>
             <span class="expense-cost">₹${item.cost}</span>
           </div>
@@ -297,6 +303,7 @@
           <div class="expense-remarks"><b>Notes:</b> ${item.remarks || ''}</div>
         `;
         list.appendChild(card);
+        idx++;
       });
       document.getElementById('total-cost').textContent = total;
     }).catch(() => {

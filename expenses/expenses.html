@@ -7,143 +7,136 @@
   <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/48/wedding-rings.png"/>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'EB Garamond', serif;
-      background: linear-gradient(135deg, #fff8f0 80%, #f7e6d3 100%);
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .main-card {
-      max-width: 900px;
-      margin: 36px auto;
-      border-radius: 18px;
-      box-shadow: 0 8px 32px rgba(184, 92, 56, 0.13), 0 1.5px 0 #e2b97f;
-      background: #fffbe6;
-      border: 10px solid #e2b97f;
-      padding: 24px;
-      position: relative;
-    }
-    h2 {
-      text-align: center;
-      color: #b85c38;
-      margin-bottom: 18px;
-      font-size: 2rem;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 18px;
-      background: #fffdf8;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px #e2b97f22;
-    }
-    th, td {
-      padding: 10px 8px;
-      border-bottom: 1px solid #e2b97f44;
-      text-align: left;
-      font-size: 1rem;
-    }
-    th {
-      background: #fbeee6;
-      color: #a03c1c;
-      font-weight: 600;
-    }
-    tr:last-child td {
-      border-bottom: none;
-    }
-    .settled-checkbox {
-      width: 22px;
-      height: 22px;
-      accent-color: #b85c38;
-      cursor: pointer;
-    }
-    .category, .paidby {
-      font-weight: 500;
-      color: #7e4a2f;
-    }
-    .remarks {
-      font-size: 0.95rem;
-      color: #4b2e2e;
-    }
-    .total-row td {
-      font-weight: bold;
-      color: #b85c38;
-      background: #fffbe6;
-      border-top: 2px solid #e2b97f;
-    }
-    @media (max-width: 700px) {
-      .main-card { max-width: 98vw; padding: 8px; }
-      table, th, td { font-size: 0.95rem; }
-    }
-  </style>
+  #expenses-list {
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .expense-card {
+    background: #fffdf8;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #e2b97f22;
+    padding: 16px 14px 12px 14px;
+    border: 2px solid #e2b97f44;
+    display: flex;
+    flex-direction: column;
+    font-size: 1rem;
+  }
+  .expense-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .expense-name {
+    font-weight: 600;
+    color: #a03c1c;
+    font-size: 1.08em;
+    flex: 1;
+    word-break: break-word;
+  }
+  .expense-cost {
+    font-weight: bold;
+    color: #b85c38;
+    font-size: 1.08em;
+    min-width: 80px;
+    text-align: right;
+  }
+  .expense-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 6px;
+    font-size: 0.98em;
+    color: #7e4a2f;
+  }
+  .expense-details span {
+    min-width: 120px;
+    word-break: break-word;
+  }
+  .expense-settled input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #b85c38;
+    vertical-align: middle;
+    margin-left: 4px;
+  }
+  .expense-remarks {
+    font-size: 0.97em;
+    color: #4b2e2e;
+    margin-top: 2px;
+    word-break: break-word;
+  }
+  .total-row-card {
+    margin-top: 22px;
+    background: #fffbe6;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 1.08em;
+    box-shadow: 0 1px 4px #e2b97f22;
+    border: 2px solid #e2b97f44;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  @media (max-width: 700px) {
+    .main-card { max-width: 100vw; padding: 4vw 2vw; border-width: 4px; }
+    #expenses-list { gap: 10px; }
+    .expense-card { padding: 12px 6vw 10px 6vw; font-size: 0.98em; }
+    .expense-header { flex-direction: column; align-items: flex-start; gap: 2px; }
+    .expense-cost { align-self: flex-end; font-size: 1.05em; }
+    .expense-details { flex-direction: column; gap: 6px; font-size: 0.97em; }
+    .total-row-card { font-size: 1em; padding: 8px 6vw; }
+  }
+</style>
 </head>
 <body>
   <div class="main-card">
-    <h2>Wedding Expenses Tracker</h2>
-    <table id="expenses-table">
-      <thead>
-        <tr>
-          <th>Expense Name</th>
-          <th>Category</th>
-          <th>Cost (₹)</th>
-          <th>Date</th>
-          <th>Paid By</th>
-          <th>Settled</th>
-          <th>Notes/Remarks</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Expense items will be loaded here -->
-      </tbody>
-      <tfoot>
-        <tr class="total-row">
-          <td colspan="2">Total</td>
-          <td id="total-cost"></td>
-          <td colspan="4"></td>
-        </tr>
-      </tfoot>
-    </table>
+  <h2>Wedding Expenses Tracker</h2>
+  <div id="expenses-list"></div>
+  <div class="total-row-card">
+    <span style="font-weight:bold; color:#b85c38; font-size:1.1em;">Total</span>
+    <span id="total-cost" style="float:right; color:#a03c1c; font-weight:bold; font-size:1.1em;"></span>
   </div>
-  <script>
-    // Static categories and paid by options
-    const categories = ["Clothes", "Catering", "Food", "Shopping", "Pooja samanlu", "Function hall"];
-    const paidByList = ["Lakshmi", "Uday", "Deepthi", "Ramya"];
-
-    // Load expenses from local JSON file
-    fetch('expenses.json')
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        const tbody = document.querySelector('#expenses-table tbody');
-        let total = 0;
-        data.forEach((item, idx) => {
-          total += Number(item.cost) || 0;
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>${item.name}</td>
-            <td class="category">${item.category}</td>
-            <td>${item.cost}</td>
-            <td>${item.date}</td>
-            <td class="paidby">${item.paidBy}</td>
-            <td style="text-align:center;">
-              <input type="checkbox" class="settled-checkbox" ${item.settled ? 'checked' : ''} disabled>
-            </td>
-            <td class="remarks">${item.remarks || ''}</td>
-          `;
-          tbody.appendChild(tr);
-        });
-        document.getElementById('total-cost').textContent = total;
-      })
-      .catch(() => {
-        document.querySelector('#expenses-table tbody').innerHTML =
-          `<tr><td colspan="7" style="text-align:center; color:#a03c1c;">Unable to load expenses. Please add <b>expenses.json</b> in this folder.</td></tr>`;
+</div>
+<script>
+  fetch('expenses.json')
+    .then(response => response.json())
+    .then(data => {
+      const list = document.getElementById('expenses-list');
+      let total = 0;
+      if (!Array.isArray(data) || !data.length) {
+        list.innerHTML = '<div style="text-align:center; color:#a03c1c;">No expenses found.</div>';
         document.getElementById('total-cost').textContent = '-';
+        return;
+      }
+      data.forEach(item => {
+        total += Number(item.cost) || 0;
+        const card = document.createElement('div');
+        card.className = 'expense-card';
+        card.innerHTML = `
+          <div class="expense-header">
+            <span class="expense-name">${item.name}</span>
+            <span class="expense-cost">₹${item.cost}</span>
+          </div>
+          <div class="expense-details">
+            <span class="expense-category"><b>Category:</b> ${item.category}</span>
+            <span class="expense-date"><b>Date:</b> ${item.date}</span>
+            <span class="expense-paidby"><b>Paid By:</b> ${item.paidBy}</span>
+            <span class="expense-settled"><b>Settled:</b> <input type="checkbox" class="settled-checkbox" ${item.settled ? 'checked' : ''} disabled></span>
+          </div>
+          <div class="expense-remarks"><b>Notes:</b> ${item.remarks || ''}</div>
+        `;
+        list.appendChild(card);
       });
-  </script>
+      document.getElementById('total-cost').textContent = total;
+    })
+    .catch(() => {
+      document.getElementById('expenses-list').innerHTML =
+        `<div style="text-align:center; color:#a03c1c;">Unable to load expenses. Please add <b>expenses.json</b> in this folder.</div>`;
+      document.getElementById('total-cost').textContent = '-';
+    });
+</script>
 </body>
 </html>

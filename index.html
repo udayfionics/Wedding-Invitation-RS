@@ -15,7 +15,33 @@
   <meta property="og:image" content="https://img.icons8.com/fluency/96/wedding-rings.png"/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="https://your-invitation-link.com"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pinch-zoom-js/2.3.4/pinch-zoom.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pinch-zoom-js/2.3.4/pinch-zoom.min.js"></script>
   <style>
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      padding-top: 40px;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.95);
+    }
+    .modal .modal-content {
+      width: 100%;
+      height: auto;
+      max-width: 100%;
+      max-height: 100%;
+    }
+    .close {
+      position: absolute;
+      top: 15px; right: 25px;
+      font-size: 32px;
+      font-weight: bold;
+      color: #fff;
+      cursor: pointer;
+      z-index: 10000;
+    }
     body {
       font-family: 'EB Garamond', serif;
       background: linear-gradient(135deg, #fff8f0 80%, #f7e6d3 100%);
@@ -361,10 +387,33 @@
         </div>
       </div>
     </div>
+    <!-- Wedding Card Section -->
+    <div class="section-card">
+      <div class="section-title" style="font-size:22px; margin-bottom:12px;">Wedding Card</div>
+      <div class="center">
+        <img src="images/wedding_card.jpeg" alt="Wedding Card" class="wedding-card-img" onclick="openFullScreen()">
+      </div>
+    </div>
+    
+    <!-- Fullscreen Modal -->
+    <div id="imgModal" class="modal">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <pinch-zoom>
+        <img src="images/wedding_card.jpeg" alt="Wedding Card Full" class="modal-content" onclick="closeModal()">
+      </pinch-zoom>
+    </div>
     <!-- Footer Section -->
     <div class="footer">
       We wish to celebrate together — With Love and Regards
       <span style="display:block; font-size:14px; margin-top:6px;">Smt & Sri Garimella Bapurao and Family</span>
     </div>
   </div>
+  <script>
+    function openFullScreen() {
+      document.getElementById("imgModal").style.display = "block";
+    }
+    function closeModal() {
+      document.getElementById("imgModal").style.display = "none";
+    }
+  </script>
 </body>

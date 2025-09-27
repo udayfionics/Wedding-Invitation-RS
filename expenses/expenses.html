@@ -8,13 +8,75 @@
   <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/48/wedding-rings.png" />
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;700&display=swap" rel="stylesheet">
   <style>
-    #expenses-list {
-      margin-top: 18px;
+    .expense-details {
       display: flex;
-      flex-direction: column;
-      gap: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 6px;
+      font-size: 0.98em;
+      color: #7e4a2f;
     }
-
+    .expense-details span {
+      min-width: 120px;
+      word-break: break-word;
+    }
+    .expense-settled input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: #b85c38;
+      vertical-align: middle;
+      margin-left: 4px;
+    }
+    .expense-remarks {
+      font-size: 0.97em;
+      color: #4b2e2e;
+      margin-top: 2px;
+      word-break: break-word;
+    }
+    #expenses-table-container { width: 100%; }
+    #expenses-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 18px;
+      background: #fffdf8;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px #e2b97f22;
+    }
+    th, td {
+      padding: 10px 8px;
+      border-bottom: 1px solid #e2b97f44;
+      text-align: left;
+      font-size: 1rem;
+    }
+    th {
+      background: #fbeee6;
+      color: #a03c1c;
+      font-weight: 600;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    .settled-checkbox {
+      width: 22px;
+      height: 22px;
+      accent-color: #b85c38;
+      cursor: pointer;
+    }
+    .category, .paidby {
+      font-weight: 500;
+      color: #7e4a2f;
+    }
+    .remarks {
+      font-size: 0.95rem;
+      color: #4b2e2e;
+    }
+    .total-row td {
+      font-weight: bold;
+      color: #b85c38;
+      background: #fffbe6;
+      border-top: 2px solid #e2b97f;
+    }
     .expense-card {
       background: #fffdf8;
       border-radius: 12px;
@@ -24,15 +86,14 @@
       display: flex;
       flex-direction: column;
       font-size: 1rem;
+      margin-bottom: 12px;
     }
-
     .expense-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 6px;
     }
-
     .expense-name {
       font-weight: 600;
       color: #a03c1c;
@@ -40,13 +101,20 @@
       flex: 1;
       word-break: break-word;
     }
-
     .expense-cost {
       font-weight: bold;
       color: #b85c38;
       font-size: 1.08em;
       min-width: 80px;
       text-align: right;
+    }
+    @media (max-width: 700px) {
+      #expenses-table { display: none; }
+      #expenses-list { display: flex; flex-direction: column; gap: 10px; }
+    }
+    @media (min-width: 701px) {
+      #expenses-list { display: none; }
+      #expenses-table { display: table; }
     }
 
     .expense-details {
@@ -135,31 +203,87 @@
 <body>
   <div class="main-card">
     <h2>Wedding Expenses Tracker</h2>
-    <div id="expenses-list"></div>
-    <div class="total-row-card">
-      <span style="font-weight:bold; color:#b85c38; font-size:1.1em;">Total</span>
-      <span id="total-cost" style="float:right; color:#a03c1c; font-weight:bold; font-size:1.1em;"></span>
+    <div id="expenses-table-container">
+      <table id="expenses-table">
+        <thead>
+          <tr>
+            <th>Expense Name</th>
+            <th>Category</th>
+            <th style="text-align:right;">Cost (₹)</th>
+            <th>Date</th>
+            <th>Paid By</th>
+            <th>Settled</th>
+            <th>Notes/Remarks</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Expense items will be loaded here -->
+        </tbody>
+        <tfoot>
+          <tr class="total-row">
+            <td colspan="2">Total</td>
+            <td id="total-cost" style="text-align:right;"></td>
+            <td colspan="4"></td>
+          </tr>
+        </tfoot>
+      </table>
+      <div id="expenses-list"></div>
     </div>
     <div style="text-align:right; margin-top: 18px; margin-bottom:12px;">
       <a href="add_expense.html" style="background:#b85c38; color:#fff; padding:8px 18px; border-radius:8px; text-decoration:none; font-weight:600; font-size:1rem;">+ Add Expense</a>
     </div>
   </div>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <script>
-    fetch('expenses.json')
-      .then(response => response.json())
-      .then(data => {
-        const list = document.getElementById('expenses-list');
-        let total = 0;
-        if (!Array.isArray(data) || !data.length) {
-          list.innerHTML = '<div style="text-align:center; color:#a03c1c;">No expenses found.</div>';
-          document.getElementById('total-cost').textContent = '-';
-          return;
-        }
-        data.forEach(item => {
-          total += Number(item.cost) || 0;
-          const card = document.createElement('div');
-          card.className = 'expense-card';
-          card.innerHTML = `
+    // Your Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyDqiN2al10XnwnIgzYe564RRhA1uKdWSrk",
+      authDomain: "wm-app-rs.firebaseapp.com",
+      projectId: "wm-app-rs",
+      storageBucket: "wm-app-rs.firebasestorage.app",
+      messagingSenderId: "131943023708",
+      appId: "1:131943023708:web:958b4c10bbba922e0e1299",
+      measurementId: "G-SFFJ9Y10HK"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    console.log("Fetching expenses from Firestore...");
+    // Read expenses from Firestore
+    db.collection('expenses').orderBy('date', 'desc').get().then(snapshot => {
+      console.log("Expenses fetched:", snapshot.size);
+      // Desktop/table view
+      const tbody = document.querySelector('#expenses-table tbody');
+      // Mobile/card view
+      const list = document.getElementById('expenses-list');
+      let total = 0;
+      if (snapshot.empty) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#a03c1c;">No expenses found.</td></tr>';
+        list.innerHTML = '<div style="text-align:center; color:#a03c1c;">No expenses found.</div>';
+        document.getElementById('total-cost').textContent = '-';
+        return;
+      }
+      snapshot.forEach(doc => {
+        console.log("Expense document:", doc.id);
+        const item = doc.data();
+        total += Number(item.cost) || 0;
+        // Table row for desktop
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${item.name}</td>
+          <td class="category">${item.category}</td>
+          <td style="text-align:right;">${item.cost}</td>
+          <td>${item.date}</td>
+          <td class="paidby">${item.paidBy}</td>
+          <td style="text-align:center;"><input type="checkbox" class="settled-checkbox" ${item.settled ? 'checked' : ''} disabled></td>
+          <td class="remarks">${item.remarks || ''}</td>
+        `;
+        tbody.appendChild(tr);
+        // Card for mobile
+        const card = document.createElement('div');
+        card.className = 'expense-card';
+        card.innerHTML = `
           <div class="expense-header">
             <span class="expense-name">${item.name}</span>
             <span class="expense-cost">₹${item.cost}</span>
@@ -172,15 +296,16 @@
           </div>
           <div class="expense-remarks"><b>Notes:</b> ${item.remarks || ''}</div>
         `;
-          list.appendChild(card);
-        });
-        document.getElementById('total-cost').textContent = total;
-      })
-      .catch(() => {
-        document.getElementById('expenses-list').innerHTML =
-          `<div style="text-align:center; color:#a03c1c;">Unable to load expenses. Please add <b>expenses.json</b> in this folder.</div>`;
-        document.getElementById('total-cost').textContent = '-';
+        list.appendChild(card);
       });
+      document.getElementById('total-cost').textContent = total;
+    }).catch(() => {
+      document.querySelector('#expenses-table tbody').innerHTML =
+        `<tr><td colspan="7" style="text-align:center; color:#a03c1c;">Unable to load expenses from Firestore.</td></tr>`;
+      document.getElementById('expenses-list').innerHTML =
+        `<div style="text-align:center; color:#a03c1c;">Unable to load expenses from Firestore.</div>`;
+      document.getElementById('total-cost').textContent = '-';
+    });
   </script>
 </body>
 

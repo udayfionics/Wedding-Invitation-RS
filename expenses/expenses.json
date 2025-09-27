@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Sarees Shopping",
+    "category": "Clothes",
+    "cost": 12000,
+    "date": "2025-09-10",
+    "paidBy": "Lakshmi",
+    "settled": true,
+    "remarks": "For bride and family"
+  },
+  {
+    "name": "Function Hall Advance",
+    "category": "Function hall",
+    "cost": 25000,
+    "date": "2025-09-15",
+    "paidBy": "Uday",
+    "settled": false,
+    "remarks": "Advance payment"
+  }
+]
